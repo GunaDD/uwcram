@@ -161,6 +161,8 @@ def review(request, deck_id):
         'back': 'Congratulations, you have completed the deck!',
     })
 
+    print("hi world")
+
     return render(request, 'webapp/review.html', {
         "cards": json.dumps(dictionary)
     })
@@ -248,7 +250,7 @@ def decks_course(request, course_id):
     course = Course.objects.get(id=course_id)
     result = []
     for deck in Deck.objects.all():
-        if deck.course == course:
+        if deck.course == course and (deck.public or request.user == deck.writer):
             result.append(deck)
 
     return render(request, 'webapp/search.html', {
