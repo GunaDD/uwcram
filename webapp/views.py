@@ -33,7 +33,7 @@ def login_view(request):
     
         if user is not None:
             login(request, user)
-            return render(request, 'webapp/index.html')
+            return redirect(reverse("courses"))
         else:
             print("NOT FOUND ACCOUNT !")
 
@@ -66,7 +66,7 @@ def register(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            return redirect("index")
+            return redirect(reverse("courses"))
         else:
             print(form.errors)
     return render(request, 'webapp/register.html')
