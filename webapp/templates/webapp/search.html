@@ -1,0 +1,58 @@
+{% extends "webapp/layout.html" %}
+
+{% block body %}
+<div class="min-h-screen bg-white text-black font-serif">
+  <form action="{% url 'search' %}" method="POST" class="py-6">
+    {% csrf_token %}
+    <div class="flex items-center justify-center">
+      <input
+        type="text"
+        name="text"
+        placeholder="Search deck name"
+        class="border border-black rounded-l px-4 py-2 text-black text-sm outline-none focus:ring-1 focus:ring-black"
+      />
+      <button 
+        type="submit" 
+        class="border border-black border-l-0 bg-black text-white rounded-r px-4 py-2 hover:bg-gray-800"
+        >
+        Search
+      </button>
+    </div>
+  </form>
+
+  <div class="grid grid-cols-3 gap-6 px-4 mt-10">
+    <div></div>
+  
+    <div class="container mx-auto px-4 py-6">
+        {% for deck in decks %}
+        <div class="bg-gray-100 shadow-md rounded-lg p-4 mb-5">
+        <h3 class="text-lg font-serif font-semibold text-gray-700">
+            {{ deck.name }}
+        </h3>
+        <p class="text-sm text-gray-600 mt-2">
+            By: {{ deck.writer.username }}
+        </p>
+        <p class="text-sm text-gray-600 mt-2"> 
+            Course: {{ deck.course.subject }} {{ deck.course.catalog_number }}
+        </p>
+        <a 
+            href="{% url 'review' deck.id %}" 
+            class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
+        >
+            Review <i class="fa-solid fa-book"></i>
+        </a>
+        <a 
+            href="{% url 'edit' deck.id %}" 
+            class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
+        >
+            Edit <i class="fa-solid fa-pencil"></i>
+        </a>
+        </div>
+        {% endfor %}
+  </div>
+  
+    <div></div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "webapp/layout.html" %}
+
+{% block body %}
+
+<div class="bg-gray-100">
+    <div class="container items-center mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="md:w-1/2 p-6 mb-2">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Create new deck</h2>
+
+                <form id="card-form" action="{% url 'decks' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="object-dropdown">Select the course:</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <select name="course">
+                            {% for course in courses %}
+                            <option value="{{ course.id }}"
+                                {% if course.id == selected_course %}selected{% endif %}>
+                                {{ course.subject }} {{ course.catalog_number }} {{ course.campus }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="deck_name" class="block mb-2 text-sm font-medium text-gray-700">Deck Name</label>
+                        <input 
+                            type="text" 
+                            id="deck_name" 
+                            name="deck_name"
+                            class="bg-white border border-gray-300 text-sm rounded-lg block h-10 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                            placeholder="Enter deck name" 
+                        />
+                    </div> 
+
+                    <div class="mb-3">
+                        <label>
+                            <input type="checkbox" name="public" value="0"> Make deck public
+                        </label>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        name="public"
+                        class="w-full bg-gray-900 text-white font-medium rounded-lg text-sm px-5 py-3 hover:bg-gray-600 transition duration-200"
+                    >
+                        Submit
+                    </button>
+                </form>
+
+                <div class="mt-4">
+                    <a href="{% url 'search' %}">
+                        Add cards to deck <span>&#8594;</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mx-auto px-4 py-6">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="p-6">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-4">
+                View Your Decks
+            </h2>
+            <p class="text-gray-600 mb-6">Browse through your collection of decks.</p>
+        
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for deck in decks %}
+                <div class="bg-gray-100 shadow-md rounded-lg p-4">
+                <h3 class="text-lg font-serif font-semibold text-gray-700">
+                    {{ deck.name }}
+                </h3>
+                <p class="text-sm text-gray-600 mt-2">
+                    By: {{ deck.writer.username }}
+                </p>
+                <p class="text-sm text-gray-600 mt-2">
+                    Course: {{ deck.course.subject }} {{ deck.course.catalog_number }}
+                </p>
+                <a 
+                    href="{% url 'review' deck.id %}" 
+                    class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
+                >
+                    Review <i class="fa-solid fa-book"></i>
+                </a>
+
+                {% if user.is_authenticated and deck.writer == user %}
+                <a 
+                    href="{% url 'edit' deck.id %}" 
+                    class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
+                >
+                    Edit <i class="fa-solid fa-pencil"></i>
+                </a>
+                {% endif %}
+                
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+      
+</div>
+
+
+
+
+{% endblock %}

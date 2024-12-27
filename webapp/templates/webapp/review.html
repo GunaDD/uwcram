@@ -1,0 +1,125 @@
+{% extends "webapp/layout.html" %}
+
+{% block body %}
+
+<div class="flex flex-col h-screen justify-center">
+    <div class="flex flex-col items-center justify-center">
+        <div class="flex justify-center border border-gray-300 rounded font-serif p-4">
+            <div class="front-page flex-1 text-center" data-id="{{ card.id }}" style="display: block;">
+                {{ card.front }}
+            </div>
+            <div class="back-page flex-1 text-center" data-id="{{ card.id }}" style="display: none;">
+                {{ card.back }}
+            </div>
+        </div>
+        <div class="flex justify-between items-center space-x-4">
+            <div>
+                <button type="button" data-id="{{ card.id }}" class="prev mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
+                    Prev
+                </button>
+            </div>
+            <div>
+                <button type="button" data-id="{{ card.id }}" class="flip-button mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
+                    Flip
+                </button>
+            </div>
+            <div>
+                <button type="button" data-id="{{ card.id }}" class="next mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const jsonData = JSON.parse('{{ cards|escapejs }}');
+var pointer = 0;
+
+const frontPage = document.querySelector(`.front-page`);
+frontPage.innerHTML = jsonData[0].front;
+
+const backPage = document.querySelector(`.back-page`);
+backPage.innerHTML = jsonData[0].back;
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.flip-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            console.log('yo');
+            event.preventDefault();
+
+            const dataId = button.getAttribute('data-id');
+            const frontPage = document.querySelector(`.front-page`);
+            const backPage = document.querySelector(`.back-page`);
+
+            if (frontPage.style.display === 'none' || backPage.style.display === '') {
+                frontPage.style.display = 'block';
+                backPage.style.display = 'none';
+            } else {
+                frontPage.style.display = 'none';
+                backPage.style.display = 'block';
+            }
+        });
+    });
+    document.querySelectorAll('.next').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+        
+            if(pointer + 1 < jsonData.length) {
+                pointer += 1;
+                const frontPage = document.querySelector(`.front-page`);
+                frontPage.innerHTML = jsonData[pointer].front;
+
+                const backPage = document.querySelector(`.back-page`);
+                backPage.innerHTML = jsonData[pointer].back;
+
+                renderMathInElement(frontPage, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    output: 'mathml',
+                });
+                renderMathInElement(backPage, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    output: 'mathml',
+                });
+            }     
+        });
+    });
+    document.querySelectorAll('.prev').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+        
+            if(pointer >= 0) {
+                pointer -= 1;
+                const frontPage = document.querySelector(`.front-page`);
+                frontPage.innerHTML = jsonData[pointer].front;
+
+                const backPage = document.querySelector(`.back-page`);
+                backPage.innerHTML = jsonData[pointer].back;
+
+                renderMathInElement(frontPage, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    output: 'mathml',
+                });
+                renderMathInElement(backPage, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    output: 'mathml',
+                });
+            }     
+        });
+    });
+});
+
+</script>
+{% endblock %}

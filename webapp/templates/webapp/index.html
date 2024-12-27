@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkiStudy</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="flex flex-col items-center justify-center text-center h-screen font-serif">
+        <div class="container items-center">
+            <div class="mb-5">
+                <p class="text-3xl">
+                    <span id="typed-text"></span>
+                </p>
+            </div>
+            <div class="container mt-3">
+                <a href="{% url 'courses' %}">
+                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mx-3">Search</button>
+                </a>
+                <a href="{% url 'login' %}">
+                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mx-3">Login</button>
+                </a>
+                <a href="{% url 'register' %}">
+                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mx-3">Register</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var typed = new Typed("#typed-text", {
+            strings: ["Welcome to AnkiStudy"],
+            typeSpeed: 100,
+            backSpeed: 50, 
+            showCursor: true,
+            cursorChar: '|',
+            autoInsertCss: true,
+            loop: true,
+            strings: ["Welcome to AnkiStudy", "Study efficiently with Anki Cards!"]
+        });
+    });
+</script>
+</html>

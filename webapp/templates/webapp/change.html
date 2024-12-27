@@ -1,0 +1,108 @@
+{% extends "webapp/layout.html" %}
+
+{% block body %}
+
+<div class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 mb-14">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Create Your Card</h2>
+                <form id="card-form" action="{% url 'change' card.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-6">
+                        <label for="deck_name" class="block mb-2 text-sm font-medium text-gray-700">
+                            Deck Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="deck_name" 
+                            name="deck_name"
+                            class="bg-white border border-gray-300 text-sm rounded-lg block w-full h-10 px-3 focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                            placeholder="Enter deck name" 
+                            value = " {{ deck.name }} "
+                            readonly
+                        />
+                    </div> 
+
+                    <div class="mb-6">
+                        <label for="front_card" class="block mb-2 text-sm font-medium text-gray-700">Front Card</label>
+                        <textarea 
+                            id="front_card" 
+                            name="front_card"
+                            class="bg-white border border-gray-300 text-sm rounded-lg block w-full h-20 px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                            placeholder="Enter front text" 
+                            rows="4"
+                        >{{ card.front }}
+                        </textarea>
+                    </div> 
+                    
+                    <div class="mb-6">
+                        <label for="back_card" class="block mb-2 text-sm font-medium text-gray-700">Back Card</label>
+                        <textarea 
+                            id="back_card" 
+                            name="back_card"
+                            class="bg-white border border-gray-300 text-sm rounded-lg block w-full h-20 px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                            placeholder="Enter back text" 
+                            rows="4"
+                        >{{ card.back }}
+                        </textarea>
+                    </div> 
+                    
+                    <button 
+                        type="submit" 
+                        class="w-full bg-gray-900 text-white font-medium rounded-lg text-sm px-5 py-3 hover:bg-gray-600 transition duration-200"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
+            
+            <div class="w-full lg:w-1/2 bg-gray-50 p-6">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Preview</h2>
+                <div id="card-preview" class="border border-gray-300 rounded-lg p-4 min-h-[200px] max-h-80 overflow-auto bg-white">
+                    <p class="text-gray-500">Your card preview will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('card-form');
+    const preview = document.getElementById('card-preview');
+    
+    function updatePreview() {
+        const frontCard = document.getElementById('front_card').value.trim();
+        const backCard = document.getElementById('back_card').value.trim();
+        
+        if (frontCard || backCard) {
+            preview.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-white p-6 border border-gray-300 rounded-lg shadow-sm w-full">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Front</h3>
+                        <p class="mt-2 text-gray-700 whitespace-pre-wrap break-words">${frontCard || '<span class="text-gray-400">No front text</span>'}</p>
+                    </div>
+                    <div class="bg-white p-6 border border-gray-300 rounded-lg shadow-sm w-full">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Back</h3>
+                        <p class="mt-2 text-gray-700 whitespace-pre-wrap break-words">${backCard || '<span class="text-gray-400">No back text</span>'}</p>
+                    </div>
+                </div>
+            `;
+            renderMathInElement(preview, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ],
+                output: 'mathml',
+            });
+        } else {
+            preview.innerHTML = `<p class="text-gray-500">Your card preview will appear here.</p>`;
+        }
+    }
+    
+    document.getElementById('front_card').addEventListener('input', updatePreview);
+    document.getElementById('back_card').addEventListener('input', updatePreview);
+    
+</script>
+
+{% endblock %}

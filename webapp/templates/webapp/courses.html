@@ -1,0 +1,112 @@
+{% extends 'webapp/layout.html' %}
+
+{% block body %}
+
+
+<form action="{% url 'courses' %}" method="POST" class="py-6">
+    {% csrf_token %}
+    <div class="flex items-center justify-center">
+        <input
+        type="text"
+        name="subject"
+        placeholder="Enter course name"
+        class="border border-black rounded-l px-4 py-2 text-black text-sm outline-none focus:ring-1 focus:ring-black"
+        />
+        <input
+        type="text"
+        name="catalog_number"
+        placeholder="Enter course number"
+        class="border border-black rounded-l px-4 py-2 text-black text-sm outline-none focus:ring-1 focus:ring-black"
+        />
+        <button 
+        type="submit" 
+        class="border border-black border-l-0 bg-black text-white rounded-r px-4 py-2 hover:bg-gray-800"
+        >
+        Search
+        </button>
+    </div>
+</form>
+
+
+<!-- class Course(models.Model):
+    subject = models.TextField()
+    catalog_number = models.TextField()
+    title = models.TextField()
+    topic = models.TextField()
+    campus = models.TextField() -->
+
+<div class="pagination justify-center items-center text-center mt-4 mb-10">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">previous</a>
+        {% endif %}
+
+        <span class="current mr-1 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+            Page {{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    
+
+<div class="grid grid-cols-3 gap-6 px-4 mt-10">
+    <div></div>
+
+    <div class="col-span-1">
+    <div class="grid grid-cols-1 gap-6 justify-center items-center">
+
+        {% for course in page_obj %}
+        <div class="shadow-md border border-black rounded-lg p-4">
+            <h2 class="text-lg font-bold">{{ course.subject }}: {{ course.catalog_number }}</h2>
+            <h2 class="text-lg font-bold">{{ course.title }}</h2>
+            <p> Campus: {{ course.campus }} </p>
+            
+            <a 
+                href="{% url 'deck-course' course.id %}" 
+                class="mt-4 inline-block border border-black text-black py-2 px-4 rounded hover:bg-black hover:text-white"
+                >
+                <i class="fa fa-book" aria-hidden="true"></i> View decks
+            </a>
+
+            {% if user.is_authenticated %}
+            <a 
+                href="{% url 'add-deck-to-course' course.id %}" 
+                class="mt-4 inline-block border border-black text-black py-2 px-4 rounded hover:bg-black hover:text-white"
+                >
+                <i class="fa fa-plus" aria-hidden="true"></i> Add deck
+            </a>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+    <div></div>
+</div>
+
+<div class="pagination justify-center items-center text-center mt-8 mb-10">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">previous</a>
+        {% endif %}
+
+        <span class="current mr-1 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+            Page {{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock %}
