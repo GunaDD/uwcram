@@ -224,8 +224,13 @@ def courses(request):
         for course in Course.objects.all():
             if subject in course.subject and catalog_number in course.catalog_number:
                 result.append(course)
+
+        paginator = Paginator(result, 10)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
         return render(request, 'webapp/courses.html', {
-            "courses":result,
+            "page_obj": page_obj,
         })
     
     all_courses = Course.objects.all()
