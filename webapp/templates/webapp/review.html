@@ -92,6 +92,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 const backPage = document.querySelector(`.back-page`);
                 backPage.innerHTML = jsonData[pointer].back;
 
+                frontPage.style.display = 'block';
+                backPage.style.display = 'none';
+
                 const pageNum = document.querySelector('.page-num');
                 pageNum.innerHTML = `${pointer + 1} / ${jsonData.length} `
 
@@ -128,6 +131,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const backPage = document.querySelector(`.back-page`);
                 backPage.innerHTML = jsonData[pointer].back;
+
+                frontPage.style.display = 'block';
+                backPage.style.display = 'none';
 
                 const pageNum = document.querySelector('.page-num');
                 pageNum.innerHTML = `${pointer + 1} / ${jsonData.length} `
