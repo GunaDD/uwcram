@@ -14,7 +14,7 @@ from .models import *
 import random
 import json
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 # Create your views here.
 
@@ -186,6 +186,10 @@ def search(request):
 @login_required
 def edit(request, deck_id):
     deck = Deck.objects.get(id=deck_id)
+
+    if deck.writer != request.user:
+        return HttpResponseForbidden("You are not authorized to edit this deck.")
+    
     return render(request, 'webapp/edit.html', {
         "cards": deck.cards.all(),
         "deck": deck

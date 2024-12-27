@@ -2,32 +2,44 @@
 
 {% block body %}
 
-<div class="flex flex-col h-screen justify-center">
-    <div class="flex flex-col items-center justify-center">
-        <div class="flex justify-center border border-gray-300 rounded font-serif p-4">
-            <div class="front-page flex-1 text-center" data-id="{{ card.id }}" style="display: block;">
-                {{ card.front }}
-            </div>
-            <div class="back-page flex-1 text-center" data-id="{{ card.id }}" style="display: none;">
-                {{ card.back }}
+<div class="min-h-screen bg-gray-50 p-6">
+
+    <div class="max-w-2xl mx-auto mb-12 px-4">
+        <div class="bg-gray-200 rounded-full h-2">
+            <div id="progress-bar" class="bg-orange-400 h-full rounded-full transition-all duration-300 text-white text-center text-xs" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto flex flex-col items-center justify-center gap-8">
+
+        <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <div class="flex flex-col">
+
+                <div class="flip-button mb-2 text-end">
+                    <i class="fa-solid fa-repeat"></i>
+                </div>
+
+                <div class="front-page text-center text-xl mb-4" data-id="{{ card.id }}" style="display: block;">
+                    {{ card.front }}
+                </div>
+                <div class="back-page text-center text-xl mb-4" data-id="{{ card.id }}" style="display: none;">
+                    {{ card.back }}
+                </div>
             </div>
         </div>
-        <div class="flex justify-between items-center space-x-4">
-            <div>
-                <button type="button" data-id="{{ card.id }}" class="prev mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
-                    Prev
-                </button>
+
+        <div class="flex items-center justify-between w-full max-w-md px-4">
+            <button type="button" data-id="{{ card.id }}" class="prev p-3 hover:bg-gray-100 rounded-full transition-colors">
+                <i class="fa-solid fa-angle-left text-gray-600 text-xl"></i>
+            </button>
+
+            <div class="page-num text-gray-600 font-medium min-w-[4rem] text-center">
+                <!-- page num will be inserted by js -->
             </div>
-            <div>
-                <button type="button" data-id="{{ card.id }}" class="flip-button mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
-                    Flip
-                </button>
-            </div>
-            <div>
-                <button type="button" data-id="{{ card.id }}" class="next mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
-                    Next
-                </button>
-            </div>
+
+            <button type="button" data-id="{{ card.id }}" class="next p-3 hover:bg-gray-100 rounded-full transition-colors">
+                <i class="fa-solid fa-angle-right text-gray-600 text-xl"></i>
+            </button>
         </div>
     </div>
 </div>
@@ -42,10 +54,16 @@ frontPage.innerHTML = jsonData[0].front;
 const backPage = document.querySelector(`.back-page`);
 backPage.innerHTML = jsonData[0].back;
 
+const pageNum = document.querySelector('.page-num');
+pageNum.innerHTML = `${pointer + 1} / ${jsonData.length} `
+
+var progress = (pointer + 1) / jsonData.length * 100;
+const progressBar = document.getElementById('progress-bar');
+progressBar.style.width = `${progress}%`;
+
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.flip-button').forEach(button => {
         button.addEventListener('click', function(event) {
-            console.log('yo');
             event.preventDefault();
 
             const dataId = button.getAttribute('data-id');
@@ -61,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+
     document.querySelectorAll('.next').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
@@ -72,6 +91,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const backPage = document.querySelector(`.back-page`);
                 backPage.innerHTML = jsonData[pointer].back;
+
+                const pageNum = document.querySelector('.page-num');
+                pageNum.innerHTML = `${pointer + 1} / ${jsonData.length} `
+
+                var progress = (pointer + 1) / jsonData.length * 100;
+                const progressBar = document.getElementById('progress-bar');
+                progressBar.style.width = `${progress}%`;
 
                 renderMathInElement(frontPage, {
                     delimiters: [
@@ -90,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }     
         });
     });
+
     document.querySelectorAll('.prev').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
@@ -101,6 +128,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const backPage = document.querySelector(`.back-page`);
                 backPage.innerHTML = jsonData[pointer].back;
+
+                const pageNum = document.querySelector('.page-num');
+                pageNum.innerHTML = `${pointer + 1} / ${jsonData.length} `
+
+                var progress = (pointer + 1) / jsonData.length * 100;
+                const progressBar = document.getElementById('progress-bar');
+                progressBar.style.width = `${progress}%`;
 
                 renderMathInElement(frontPage, {
                     delimiters: [
@@ -120,6 +154,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-
 </script>
 {% endblock %}

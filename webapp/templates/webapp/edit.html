@@ -2,56 +2,52 @@
 
 {% block body %}
 
-<div class="grid grid-cols-3 gap-4 m-8 text-center">
-    <div>
-        <a href="{% url 'add' deck.id %}" class="block font-serif p-4 text-sm rounded-lg shadow bg-gray-900 text-white hover:bg-gray-800 transition">
-            <i class="fa-solid fa-plus"></i> Add Card
-        </a>
-    </div>
-    <div>
-        <a href="{% url 'delete-deck' deck.id %}" class="block font-serif p-4 text-sm rounded-lg shadow bg-gray-900 text-white hover:bg-gray-800 transition">
-            <i class="fa-solid fa-trash"></i> Delete Deck
-        </a>
-    </div>
-    <div>
-        <a href="{% url 'edit-public' deck.id %}" class="block font-serif p-4 text-sm rounded-lg shadow bg-gray-900 text-white hover:bg-gray-800 transition">
-            <i class="fa-solid fa-user-lock"></i> 
-            {% if deck.public %}
-                Make Private
-            {% else %}
-                Make Public
-            {% endif %}
-        </a>
-    </div>
+<div class="gap-4 m-8 text-center">
+    <a href="{% url 'add' deck.id %}" class="mx-3">
+        <i class="fa-solid fa-plus"></i> Add Card
+    </a>
+    <a href="{% url 'delete-deck' deck.id %}" class="mx-3">
+        <i class="fa-solid fa-trash"></i> Delete Deck
+    </a>
+    <a href="{% url 'edit-public' deck.id %}" class="mx-3">
+        <i class="fa-solid fa-user-lock"></i> 
+        {% if deck.public %}
+            Make Private
+        {% else %}
+            Make Public
+        {% endif %}
+    </a>
 </div>
 
 {% for card in cards %}
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 my-6">
         <div class=""></div>
-        <div class="flex flex-col justify-center m-8 font-serif p-4">
-            <div class="front-page flex-1 text-center border border-gray-300 rounded">
+
+        <div class="flex flex-col justify-center font-serif p-4 w-full">
+            <div class="front-page flex-1 text-center border border-gray-300 rounded p-4 bg-amber-50">
                 {{ card.front }}
             </div>
-            <div class="back-page flex-1 text-center border border-gray-300 rounded">
+            <div class="back-page flex-1 text-center border border-gray-300 rounded p-4 bg-orange-50">
                 {{ card.back }}
             </div>
-
-            <div class="inline-grid grid-cols-3 gap-2">
-            <a 
-                href="{% url 'change' card.id %}" 
-                class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
-            >
-                Edit <i class="fa-solid fa-pencil"></i>
-            </a>
-            <a 
-                href="{% url 'delete-card' card.id %}" 
-                class="mt-4 inline-block bg-black text-white text-sm py-2 px-4 rounded hover:bg-gray-800"
-            >
-                Delete <i class="fa-solid fa-trash-can"></i>
-            </a>
-            </div>
         </div>
-        <div class=""></div>
+        
+        <div class="pt-6">
+            <p>
+                <a 
+                    href="{% url 'change' card.id %}" 
+                >
+                    <i class="fa-solid fa-pencil"></i>
+                </a>
+            </p>
+            <p>
+                <a 
+                    href="{% url 'delete-card' card.id %}" 
+                >
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </p>
+        </div>
     </div>
 {% endfor %}
 
