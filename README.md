@@ -24,8 +24,8 @@
 ## 📸 Preview
 
 <p align="center">
-  <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank">
-    <img src="https://www.youtube.com/watch?v=A2U0cy3yJAU" 
+  <a href="https://www.youtube.com/watch?v=A2U0cy3yJAU" target="_blank">
+    <img src="https://img.youtube.com/vi/A2U0cy3yJAU/hqdefault.jpg" 
          alt="Watch the demo on YouTube" width="750">
   </a>
 </p>
