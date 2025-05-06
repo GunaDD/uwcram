@@ -36,10 +36,17 @@
 - Here are some images of the website!
 
 <p align="center">
-  <img src="docs/courses.jpg" width="30%" alt="Course view">
-  <img src="docs/create_deck.jpg" width="30%" alt="Create deck">
-  <img src="docs/edit_deck.jpg" width="30%" alt="Edit Deck">
+  <img src="docs/courses.jpg" width="60%" alt="Course view">
 </p>
+
+<p align="center">
+  <img src="docs/create_deck.jpg" width="60%" alt="Create deck">
+</p>
+
+<p align="center">
+  <img src="docs/edit_deck.jpg" width="60%" alt="Edit Deck">
+</p>
+
 
 
 ---
