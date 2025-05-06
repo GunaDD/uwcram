@@ -20,7 +20,15 @@
 
 ---
 
-## 📸 Preview  
+
+## 📸 Preview
+
+<p align="center">
+  <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank">
+    <img src="https://youtu.be/A2U0cy3yJAU" 
+         alt="Watch the demo on YouTube" width="750">
+  </a>
+</p>
 
 
 
