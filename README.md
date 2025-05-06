@@ -17,19 +17,29 @@
 - Automated web‑scraping with **Beautiful Soup** to ingest official course data.
 - Responsive, student‑friendly UI (HTML + CSS + JavaScript).
 - One‑click deploy to **Heroku**.
+- **LaTeX support** and live preview when writing the flashcards!
 
 ---
 
 
 ## 📸 Preview
 
+- Watch the live video demo of the main features here!
+
 <p align="center">
   <a href="https://www.youtube.com/watch?v=A2U0cy3yJAU" target="_blank">
-    <img src="https://img.youtube.com/vi/A2U0cy3yJAU/hqdefault.jpg" 
+    <img src="https://img.youtube.com/vi/A2U0cy3yJAU/maxresdefault.jpg" 
          alt="Watch the demo on YouTube" width="750">
   </a>
 </p>
 
+- Here are some images of the website!
+
+<p align="center">
+  <img src="docs/courses.jpg" width="30%" alt="Course view">
+  <img src="docs/create_deck.jpg" width="30%" alt="Create deck">
+  <img src="docs/edit_deck.jpg" width="30%" alt="Edit Deck">
+</p>
 
 
 ---
