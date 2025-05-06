@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "uwcram-949aa5f1bd8e.herokuapp.com",
+    "uwcram-3a1fc46f433c.herokuapp.com",    
 ]
 
 # Application definition
